@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>रोहन और श्रद्धा - हमारी प्रेम कहानी</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts for typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General body styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8c0ff, #c0f8ff);
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            transition: background 0.5s ease;
+        }
+
+        /* Loading screen styles */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff9ac8, #c79afe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeOut 1s forwards;
+            animation-delay: 2s;
+        }
+
+        .loading-text {
+            font-family: 'Parisienne', cursive;
+            font-size: 3rem;
+            color: white;
+            animation: pulse 1.5s infinite, fadeIn 1s;
+        }
+        
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Password container styling */
+        .password-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff9ac8, #c79afe);
+        }
+        
+        .password-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+        }
+        
+        .password-form h2 {
+            font-family: 'Parisienne', cursive;
+            color: #ff3366;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .password-form p {
+            margin-bottom: 25px;
+            color: #666;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #ffc2d9;
+            border-radius: 50px;
+            font-size: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border-color: #ff3366;
+            box-shadow: 0 0 10px rgba(255, 51, 102, 0.3);
+        }
+        
+        .submit-btn {
+            background: linear-gradient(45deg, #ff3366, #ff7a99);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(45deg, #ff1a4d, #ff5c81);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 51, 102, 0.5);
+        }
+        
+        .error-message {
+            color: #ff3366;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        /* Main content styling */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: none;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
+
+        /* Language selector styling */
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .lang-btn.active {
+            background: #ff3366;
+            color: white;
+            border-color: #ff3366;
+        }
+        
+        .heart-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            color: #ff4d4d;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        h1 {
+            font-family: 'Parisienne', cursive;
+            font-size: 4.5rem;
+            color: #ff3366;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #9966cc;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+        
+        /* Navigation buttons */
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            font-weight: 600;
+        }
+        
+        .nav-btn:hover, .nav-btn.active {
+            background: linear-gradient(45deg, #ff3366, #ff7a99);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 51, 102, 0.5);
+        }
+        
+        /* Section styling */
+        .section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: none;
+            backdrop-filter: blur(10px);
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #ff3366;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+        
+        .love-story {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+        
+        /* Countdown styles */
+        .countdown-container {
+            text-align: center;
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .countdown-item {
+            background: linear-gradient(45deg, #ff3366, #ff7a99);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            min-width: 100px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.3);
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .countdown-label {
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+        
+        /* Memory box styles */
+        .memory-box {
+            background: linear-gradient(to right, #f8f8f8, #ffffff);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .memory-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .memory-date {
+            color: #9966cc;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        /* Photo gallery styles */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .photo-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .photo-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-caption {
+            padding: 15px;
+            text-align: center;
+            font-style: italic;
+            color: #666;
+        }
+
+        /* Guestbook styles */
+        #guestbook-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        #guestbook-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ffc2d9;
+            border-radius: 15px;
+            resize: vertical;
+            min-height: 100px;
+            font-size: 1rem;
+        }
+
+        #guestbook-form button {
+            background: linear-gradient(45deg, #ff3366, #ff7a99);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #guestbook-form button:hover {
+            background: linear-gradient(45deg, #ff1a4d, #ff5c81);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .guestbook-entry {
+            background: linear-gradient(to right, #e6f7ff, #f0faff);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .guestbook-meta {
+            font-size: 0.9rem;
+            color: #9966cc;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .guestbook-message {
+            line-height: 1.6;
+        }
+
+        /* Footer styling */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #9966cc;
+            font-size: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .subtitle {
+                font-size: 1.4rem;
+            }
+
+            .language-selector {
+                left: 50%;
+                transform: translateX(-50%);
+                top: 10px;
+            }
+            
+            .countdown {
+                flex-wrap: wrap;
+            }
+            
+            .countdown-item {
+                min-width: 80px;
+                padding: 15px 10px;
+            }
+            
+            .countdown-number {
+                font-size: 2rem;
+            }
+            
+            .password-form {
+                padding: 25px;
+            }
+        }
+        
+        /* Utility classes for security features */
+        .no-select {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        /* Floating hearts background animation */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff4d4d;
+            opacity: 0.7;
+            animation: float 8s linear infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Styles for Gemini API features */
+        .ai-feature-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .ai-feature-box h3 {
+            font-family: 'Playfair Display', serif;
+            color: #9966cc;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .ai-input-box {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            border: 2px solid #ffc2d9;
+            border-radius: 10px;
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+
+        .ai-button {
+            background: linear-gradient(45deg, #9966cc, #b380ff);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-button:hover {
+            background: linear-gradient(45deg, #7d4ba6, #9b6cce);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        #loading-indicator {
+            margin-top: 10px;
+            font-style: italic;
+            color: #666;
+            display: none;
+        }
+        
+        /* Styles for the audio player */
+        .audio-player-container {
+            margin-top: 20px;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: #ff3366;
+        }
+    </style>
+</head>
+<body class="no-select">
+    
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <p class="loading-text" data-lang-key="loading-text">Loading Our Love...</p>
+    </div>
+
+    <!-- Password Protection Container -->
+    <div class="password-container" id="password-container">
+        <div class="password-form">
+            <h2 data-lang-key="password-title">रोहन और श्रद्धा</h2>
+            <p data-lang-key="password-subtitle">हमारी प्रेम कहानी को देखने के लिए विशेष पासवर्ड दर्ज करें</p>
+            <input type="password" class="password-input" id="password-input" data-lang-key="password-placeholder" placeholder="पासवर्ड डालें">
+            <button class="submit-btn" id="submit-password" data-lang-key="password-btn">प्रवेश करें</button>
+            <p class="error-message" id="error-message" data-lang-key="password-error">पासवर्ड गलत है। कृपया पुनः प्रयास करें।</p>
+        </div>
+    </div>
+    
+    <!-- Main Content Container (Hidden by default) -->
+    <div class="container" id="main-content">
+        <div class="floating-hearts" id="floating-hearts"></div>
+        
+        <header>
+            <div class="language-selector">
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn active" data-lang="hi">HI</button>
+                <button class="lang-btn" data-lang="mr">MR</button>
+            </div>
+            <div class="heart-icon">❤</div>
+            <h1 data-lang-key="main-title">रोहन और श्रद्धा</h1>
+            <p class="subtitle" data-lang-key="main-subtitle">प्रेम और साथ की एक खूबसूरत यात्रा</p>
+        </header>
+        
+        <div class="countdown-container">
+            <h2 data-lang-key="countdown-title">हमारी दूसरी सालगिरह की उलटी गिनती</h2>
+            <div class="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">365</div>
+                    <div class="countdown-label" data-lang-key="countdown-days">दिन</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">23</div>
+                    <div class="countdown-label" data-lang-key="countdown-hours">घंटे</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">59</div>
+                    <div class="countdown-label" data-lang-key="countdown-minutes">मिनट</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">59</div>
+                    <div class="countdown-label" data-lang-key="countdown-seconds">सेकंड</div>
+                </div>
+            </div>
+            <p data-lang-key="countdown-text">जब तक हम 19 फरवरी, 2025 को 2 साल के प्यार का जश्न मनाएंगे</p>
+        </div>
+        
+        <div class="nav">
+            <button class="nav-btn active" data-target="home" data-lang-key="nav-home">होम</button>
+            <button class="nav-btn" data-target="story" data-lang-key="nav-story">हमारी कहानी</button>
+            <button class="nav-btn" data-target="memories" data-lang-key="nav-memories">यादें</button>
+            <button class="nav-btn" data-target="gallery" data-lang-key="nav-gallery">गैलरी</button>
+            <button class="nav-btn" data-target="guestbook" data-lang-key="nav-guestbook">गेस्टबुक</button>
+            <button class="nav-btn" data-target="future" data-lang-key="nav-future">हमारा भविष्य</button>
+        </div>
+        
+        <!-- Sections of the Website -->
+        <section id="home" class="section active">
+            <h2 data-lang-key="home-title">हमारी प्रेम कहानी में आपका स्वागत है</h2>
+            <div class="love-story">
+                <p data-lang-key="home-p1">दुनिया में बहुत से पल होते हैं, लेकिन हमारे पल सबसे खास बन गए। यह वेबसाइट रोहन और श्रद्धा के बीच के खूबसूरत प्यार को समर्पित है - एक ऐसा प्यार जो हर गुजरते दिन के साथ और मजबूत होता जाता है।</p>
+                
+                <div class="memory-box">
+                    <div class="memory-date" data-lang-key="home-m1-date">19 फरवरी, 2023</div>
+                    <h3 data-lang-key="home-m1-title">जिस दिन हम मिले</h3>
+                    <p data-lang-key="home-m1-text">मुझे आज भी याद है जब मैंने तुम्हें पहली बार देखा था। तुम्हारी मुस्कान ने कमरे को रोशन कर दिया था, और मुझे उसी पल पता चल गया था कि तुम कोई खास हो।</p>
+                </div>
+                
+                <div class="memory-box">
+                    <div class="memory-date" data-lang-key="home-m2-date">5 अप्रैल, 2023</div>
+                    <h3 data-lang-key="home-m2-title">हमारी पहली डेट</h3>
+                    <p data-lang-key="home-m2-text">हम कॉफी पर घंटों बातें करते रहे, और मुझे एहसास हुआ कि मैं तुमसे कभी बात करना बंद नहीं करना चाहता। तभी मुझे पता चला कि यह सिर्फ एक आकर्षण से कहीं ज्यादा है।</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="story" class="section">
+            <h2 data-lang-key="story-title">हमारी प्रेम कहानी</h2>
+            <div class="love-story">
+                <p data-lang-key="story-p1">हमारी कहानी एक गर्म फरवरी के दिन शुरू हुई थी। शर्म भरी नजरों से लेकर दिल छू लेने वाली बातचीत तक, हमारा रिश्ता हर गुजरते दिन के साथ और मजबूत होता गया।</p>
+                
+                <div class="memory-box">
+                    <div class="memory-date" data-lang-key="story-m1-date">15 जून, 2023</div>
+                    <h3 data-lang-key="story-m1-title">हमारी पहली यात्रा</h3>
+                    <p data-lang-key="story-m1-text">पहाड़ों पर हमारी एक सप्ताहांत की छुट्टी जादुई थी। उस खूबसूरत नज़ारे के साथ तुम्हारी मुस्कान देखकर जागना एक ऐसी याद है जिसे मैं हमेशा संजो कर रखूंगा।</p>
+                </div>
+                
+                <div class="memory-box">
+                    <div class="memory-date" data-lang-key="story-m2-date">10 सितंबर, 2023</div>
+                    <h3 data-lang-key="story-m2-title">परिवारों से मिलना</h3>
+                    <p data-lang-key="story-m2-text">तुम्हें अपने माता-पिता से मिलवाते हुए मैं बहुत घबराया हुआ था, लेकिन तुमने उन्हें तुरंत मंत्रमुग्ध कर दिया। अब वे तुम्हें लगभग उतना ही प्यार करते हैं जितना मैं करता हूँ!</p>
+                </div>
+                
+                <div class="memory-box">
+                    <div class="memory-date" data-lang-key="story-m3-date">25 दिसंबर, 2023</div>
+                    <h3 data-lang-key="story-m3-title">पहला क्रिसमस साथ में</h3>
+                    <p data-lang-key="story-m3-text">तुम्हारे और तुम्हारे परिवार के साथ क्रिसमस बिताना वो सब कुछ था जिसका मैंने सपना देखा था। जिस तरह से तुम उस लाल ड्रेस में दिख रही थी, उसने मेरी साँसें रोक दीं।</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="memories" class="section">
+            <h2 data-lang-key="memories-title">हमारी खास यादें</h2>
+            <div class="love-story" id="memories-container">
+                <p data-lang-key="memories-p1">तुम्हारे साथ हर पल एक अनमोल याद बन जाता है। यहाँ हमारी कुछ सबसे खास यादें हैं:</p>
+                
+                <div class="memory-box">
+                    <div class="memory-date" data-lang-key="memories-m1-date">14 जनवरी, 2024</div>
+                    <h3 data-lang-key="memories-m1-title">तुम्हारा जन्मदिन का जश्न</h3>
+                    <p data-lang-key="memories-m1-text">तुम्हारे चेहरे पर उस सरप्राइज पार्टी को देखकर जो मैंने आयोजित की थी, जो चमक थी, वो अनमोल थी। तुम दुनिया की सारी खुशियों की हकदार हो।</p>
+                </div>
+                
+                <div class="memory-box">
+                    <div class="memory-date" data-lang-key="memories-m2-date">8 मार्च, 2024</div>
+                    <h3 data-lang-key="memories-m2-title">समुद्र तट पर छुट्टी</h3>
+                    <p data-lang-key="memories-m2-text">तुम्हारे साथ समुद्र किनारे सूर्यास्त देखना, तुम्हारा हाथ मेरे हाथ में - वह एकदम पूर्णता थी। मैंने कभी इतना सुकून महसूस नहीं किया।</p>
+                </div>
+                
+                <div class="memory-box">
+                    <div class="memory-date" data-lang-key="memories-m3-date">20 जुलाई, 2024</div>
+                    <h3 data-lang-key="memories-m3-title">हमारी पहली सालगिरह का जश्न</h3>
+                    <p data-lang-key="memories-m3-text">एक साल साथ में! मुझे यकीन नहीं हो रहा कि जब मैं तुम्हारे साथ होता हूँ तो समय कितनी तेजी से उड़ जाता है। प्यार और हँसी के कई और सालों के लिए शुभकामनाएं।</p>
+                </div>
+            </div>
+            
+            <!-- NEW: Gemini API-powered Memory Generator -->
+            <div class="ai-feature-box">
+                <h3 data-lang-key="ai-memory-title">✨ नई याद बनाएं ✨</h3>
+                <p data-lang-key="ai-memory-subtitle">कुछ शब्दों में एक पल का वर्णन करें, और एआई एक सुंदर याद का विवरण लिखने में आपकी मदद करेगा।</p>
+                <textarea id="ai-prompt" class="ai-input-box" data-lang-key="ai-memory-placeholder" placeholder="उदाहरण के लिए, 'समुद्र तट पर हमारा पहला चुंबन' या 'उस बरसात के दिन की फिल्म मैराथन'"></textarea>
+                <button id="generate-memory-btn" class="ai-button" data-lang-key="ai-memory-btn">याद बनाएं</button>
+                <p id="loading-indicator" data-lang-key="ai-memory-loading">बन रहा है...</p>
+            </div>
+        </section>
+
+        <section id="gallery" class="section">
+            <h2 data-lang-key="gallery-title">हमारे खास पल</h2>
+            <div class="photo-gallery">
+                <div class="photo-card">
+                    <img src="https://placehold.co/400x300/e0bbf4/ffffff?text=Trip+to+Goa" alt="Goa Vacation">
+                    <div class="photo-caption" data-lang-key="gallery-photo1">गोवा की यात्रा</div>
+                </div>
+                <div class="photo-card">
+                    <img src="https://placehold.co/400x300/ffb3c1/ffffff?text=First+Anniversary" alt="First Anniversary">
+                    <div class="photo-caption" data-lang-key="gallery-photo2">हमारी पहली सालगिरह</div>
+                </div>
+                <div class="photo-card">
+                    <img src="https://placehold.co/400x300/c9e0ff/ffffff?text=Rainy+Day+Coffee" alt="Rainy Day Coffee">
+                    <div class="photo-caption" data-lang-key="gallery-photo3">बरसात के दिन कॉफी डेट</div>
+                </div>
+                <div class="photo-card">
+                    <img src="https://placehold.co/400x300/ffd4b3/ffffff?text=Movie+Night" alt="Movie Night">
+                    <div class="photo-caption" data-lang-key="gallery-photo4">मूवी नाइट</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="guestbook" class="section">
+            <h2 data-lang-key="guestbook-title">गेस्टबुक</h2>
+            <p data-lang-key="guestbook-intro">यहाँ आप दोनों एक-दूसरे के लिए दिल से मैसेज छोड़ सकते हैं।</p>
+            <form id="guestbook-form">
+                <textarea id="guestbook-message" data-lang-key="guestbook-placeholder" placeholder="अपना मैसेज लिखें..."></textarea>
+                <button type="submit" data-lang-key="guestbook-btn">मैसेज भेजें</button>
+            </form>
+            <div id="guestbook-entries">
+                <p data-lang-key="guestbook-loading">मैसेज लोड हो रहे हैं...</p>
+            </div>
+        </section>
+        
+        <section id="future" class="section">
+            <h2 data-lang-key="future-title">हमारा भविष्य साथ में</h2>
+            <div class="love-story">
+                <p data-lang-key="future-p1">प्रिय श्रद्धा,</p>
+                <p data-lang-key="future-p2">जैसे-जैसे मैं भविष्य की ओर देखता हूँ, मुझे एक ऐसा जीवन दिखाई देता है जो हंसी, रोमांच और अनंत प्यार से भरा हुआ है। मैं जीवन की सभी चुनौतियों में तुम्हारे साथ खड़े रहने और हर खुशी का जश्न साथ में मनाने का वादा करता हूँ।</p>
+                <p data-lang-key="future-p3">मैं उस घर का सपना देखता हूँ जो हम बनाएंगे, उन जगहों का जो हम खोजेंगे, और उन यादों का जो हम बनाएंगे। तुम्हारे साथ, हर दिन एक आशीर्वाद है।</p>
+                <p data-lang-key="future-p4">मैं हमारी दूसरी सालगिरह और आने वाले कई और सालगिरहों का बेसब्री से इंतजार कर रहा हूँ。</p>
+                <p data-lang-key="future-p5">हमेशा तुम्हारा,<br>रोहन</p>
+            </div>
+            
+            <!-- NEW: Gemini API-powered Voice Message -->
+            <div class="ai-feature-box">
+                <h3 data-lang-key="ai-tts-title">💌 एक वॉइस मैसेज छोड़ें 💌</h3>
+                <p data-lang-key="ai-tts-subtitle">एक छोटा, प्यारा सा मैसेज टाइप करें और इसे एक रोमांटिक आवाज में सुनें।</p>
+                <textarea id="tts-prompt" class="ai-input-box" data-lang-key="ai-tts-placeholder" placeholder="उदाहरण के लिए, 'मैं तुमसे शब्दों से परे प्यार करता हूँ।'"></textarea>
+                <button id="generate-tts-btn" class="ai-button" data-lang-key="ai-tts-btn">वॉयस मैसेज बनाएं और चलाएं</button>
+                <p id="tts-loading-indicator" style="display:none; color: #ff3366;" data-lang-key="ai-tts-loading">ऑडियो बन रहा है...</p>
+                <div id="audio-player-container"></div>
+            </div>
+        </section>
+        
+        <footer>
+            <audio id="background-music" controls loop>
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                <p data-lang-key="audio-unsupported">आपका ब्राउज़र ऑडियो को सपोर्ट नहीं करता।</p>
+            </audio>
+            <p data-lang-key="footer-text1">रोहन ने श्रद्धा के लिए ❤ से बनाया है | अनंत प्रेम</p>
+            <p data-lang-key="footer-text2">© 2024 - हमारी निजी प्रेम कहानी</p>
+        </footer>
+    </div>
+
+    <!-- Notification element -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Firebase and other JS libraries -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    
+    <script>
+        // Configuration variables (to be replaced with your actual values)
+        const __app_id = 'rohan-shraddha-love-story';
+        const _firebase_config = JSON.stringify({
+            apiKey: "your-api-key",
+            authDomain: "your-project-id.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-project-id.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "your-app-id"
+        });
+        const __initial_auth_token = null;
+        
+        // Language translation data
+        const translations = {
+            'en': {
+                'loading-text': 'Loading Our Love...',
+                'password-title': 'Rohan and Shraddha',
+                'password-subtitle': 'Enter the special password to view our love story',
+                'password-placeholder': 'Enter password',
+                'password-btn': 'Enter',
+                'password-error': 'Incorrect password. Please try again.',
+                'main-title': 'Rohan and Shraddha',
+                'main-subtitle': 'A beautiful journey of love and togetherness',
+                'countdown-title': 'Countdown to Our Second Anniversary',
+                'countdown-days': 'Days',
+                'countdown-hours': 'Hours',
+                'countdown-minutes': 'Minutes',
+                'countdown-seconds': 'Seconds',
+                'countdown-text': 'Until we celebrate 2 years of love on February 19, 2025',
+                'nav-home': 'Home',
+                'nav-story': 'Our Story',
+                'nav-memories': 'Memories',
+                'nav-gallery': 'Gallery',
+                'nav-guestbook': 'Guestbook',
+                'nav-future': 'Our Future',
+                'home-title': 'Welcome to Our Love Story',
+                'home-p1': 'There are many moments in the world, but our moments became the most special. This website is dedicated to the beautiful love between Rohan and Shraddha - a love that grows stronger with each passing day.',
+                'home-m1-date': 'February 19, 2023',
+                'home-m1-title': 'The day we met',
+                'home-m1-text': 'I still remember the first time I saw you. Your smile lit up the room, and I knew in that moment that you were someone special.',
+                'home-m2-date': 'April 5, 2023',
+                'home-m2-title': 'Our first date',
+                'home-m2-text': 'We spent hours talking over coffee, and I realized I never wanted to stop talking to you. That\'s when I knew it was more than just an attraction.',
+                'story-title': 'Our Love Story',
+                'story-p1': 'Our story began on a warm February day. From shy glances to heartfelt conversations, our bond grew stronger with each passing moment.',
+                'story-m1-date': 'June 15, 2023',
+                'story-m1-title': 'Our first trip',
+                'story-m1-text': 'Our weekend getaway to the mountains was magical. Waking up to your smile with that beautiful scenery is a memory I will forever cherish.',
+                'story-m2-date': 'September 10, 2023',
+                'story-m2-title': 'Meeting the families',
+                'story-m2-text': 'I was so nervous introducing you to my parents, but you instantly charmed them. They now love you almost as much as I do!',
+                'story-m3-date': 'December 25, 2023',
+                'story-m3-title': 'First Christmas together',
+                'story-m3-text': 'Spending Christmas with you and your family was everything I dreamed of. The way you looked in that red dress took my breath away.',
+                'memories-title': 'Our Special Memories',
+                'memories-p1': 'Every moment with you becomes a priceless memory. Here are some of our most special ones:',
+                'memories-m1-date': 'January 14, 2024',
+                'memories-m1-title': 'Your birthday celebration',
+                'memories-m1-text': 'The sparkle in your eyes when you saw the surprise party I arranged was priceless. You deserve all the happiness in the world.',
+                'memories-m2-date': 'March 8, 2024',
+                'memories-m2-title': 'Beach vacation',
+                'memories-m2-text': 'Watching the sunset on the beach with you, your hand in mine - that was pure perfection. I have never felt so at peace.',
+                'memories-m3-date': 'July 20, 2024',
+                'memories-m3-title': 'Our first anniversary celebration',
+                'memories-m3-text': 'A year together! I can\'t believe how fast time flies when I am with you. Here\'s to many more years of love and laughter.',
+                'ai-memory-title': '✨ Create a New Memory ✨',
+                'ai-memory-subtitle': 'Describe a moment in a few words, and AI will help you write a beautiful memory entry.',
+                'ai-memory-placeholder': 'For example, \'our first kiss on the beach\' or \'that rainy day movie marathon\'',
+                'ai-memory-btn': 'Create Memory',
+                'ai-memory-loading': 'Generating...',
+                'gallery-title': 'Our Special Moments',
+                'gallery-photo1': 'Trip to Goa',
+                'gallery-photo2': 'Our first anniversary',
+                'gallery-photo3': 'Rainy day coffee date',
+                'gallery-photo4': 'Movie night',
+                'guestbook-title': 'Guestbook',
+                'guestbook-intro': 'Here you can leave heartfelt messages for each other.',
+                'guestbook-placeholder': 'Write your message...',
+                'guestbook-btn': 'Send Message',
+                'guestbook-loading': 'Loading messages...',
+                'guestbook-no-messages': 'No messages yet.',
+                'ai-tts-title': '💌 Leave a Voice Message 💌',
+                'ai-tts-subtitle': 'Type a short, sweet message and hear it in a romantic voice.',
+                'ai-tts-placeholder': 'For example, \'I love you beyond words.\'',
+                'ai-tts-btn': 'Generate and Play Voice Message',
+                'ai-tts-loading': 'Generating Audio...',
+                'audio-unsupported': 'Your browser does not support the audio element.',
+                'footer-text1': 'Made with ❤ by Rohan for Shraddha | Infinite Love',
+                'footer-text2': '© 2024 - Our private love story'
+            },
+            'hi': {
+                'loading-text': 'Loading Our Love...',
+                'password-title': 'रोहन और श्रद्धा',
+                'password-subtitle': 'हमारी प्रेम कहानी को देखने के लिए विशेष पासवर्ड दर्ज करें',
+                'password-placeholder': 'पासवर्ड डालें',
+                'password-btn': 'प्रवेश करें',
+                'password-error': 'पासवर्ड गलत है। कृपया पुनः प्रयास करें।',
+                'main-title': 'रोहन और श्रद्धा',
+                'main-subtitle': 'प्रेम और साथ की एक खूबसूरत यात्रा',
+                'countdown-title': 'हमारी दूसरी सालगिरह की उलटी गिनती',
+                'countdown-days': 'दिन',
+                'countdown-hours': 'घंटे',
+                'countdown-minutes': 'मिनट',
+                'countdown-seconds': 'सेकंड',
+                'countdown-text': 'जब तक हम 19 फरवरी, 2025 को 2 साल के प्यार का जश्न मनाएंगे',
+                'nav-home': 'होम',
+                'nav-story': 'हमारी कहानी',
+                'nav-memories': 'यादें',
+                'nav-gallery': 'गैलरी',
+                'nav-guestbook': 'गेस्टबुक',
+                'nav-future': 'हमारा भविष्य',
+                'home-title': 'हमारी प्रेम कहानी में आपका स्वागत है',
+                'home-p1': 'दुनिया में बहुत से पल होते हैं, लेकिन हमारे पल सबसे खास बन गए। यह वेबसाइट रोहन और श्रद्धा के बीच के खूबसूरत प्यार को समर्पित है - एक ऐसा प्यार जो हर गुजरते दिन के साथ और मजबूत होता जाता है।',
+                'home-m1-date': '19 फरवरी, 2023',
+                'home-m1-title': 'जिस दिन हम मिले',
+                'home-m1-text': 'मुझे आज भी याद है जब मैंने तुम्हें पहली बार देखा था। तुम्हारी मुस्कान ने कमरे को रोशन कर दिया था, और मुझे उसी पल पता चल गया था कि तुम कोई खास हो।',
+                'home-m2-date': '5 अप्रैल, 2023',
+                'home-m2-title': 'हमारी पहली डेट',
+                'home-m2-text': 'हम कॉफी पर घंटों बातें करते रहे, और मुझे एहसास हुआ कि मैं तुमसे कभी बात करना बंद नहीं करना चाहता। तभी मुझे पता चला कि यह सिर्फ एक आकर्षण से कहीं ज्यादा है।',
+                'story-title': 'हमारी प्रेम कहानी',
+                'story-p1': 'हमारी कहानी एक गर्म फरवरी के दिन शुरू हुई थी। शर्म भरी नजरों से लेकर दिल छू लेने वाली बातचीत तक, हमारा रिश्ता हर गुजरते दिन के साथ और मजबूत होता गया।',
+                'story-m1-date': '15 जून, 2023',
+                'story-m1-title': 'हमारी पहली यात्रा',
+                'story-m1-text': 'पहाड़ों पर हमारी एक सप्ताहांत की छुट्टी जादुई थी। उस खूबसूरत नज़ारे के साथ तुम्हारी मुस्कान देखकर जागना एक ऐसी याद है जिसे मैं हमेशा संजो कर रखूंगा।',
+                'story-m2-date': '10 सितंबर, 2023',
+                'story-m2-title': 'परिवारों से मिलना',
+                'story-m2-text': 'तुम्हें अपने माता-पिता से मिलवाते हुए मैं बहुत घबराया हुआ था, लेकिन तुमने उन्हें तुरंत मंत्रमुग्ध कर दिया। अब वे तुम्हें लगभग उतना ही प्यार करते हैं जितना मैं करता हूँ!',
+                'story-m3-date': '25 दिसंबर, 2023',
+                'story-m3-title': 'पहला क्रिसमस साथ में',
+                'story-m3-text': 'तुम्हारे और तुम्हारे परिवार के साथ क्रिसमस बिताना वो सब कुछ था जिसका मैंने सपना देखा था। जिस तरह से तुम उस लाल ड्रेस में दिख रही थी, उसने मेरी साँसें रोक दीं।',
+                'memories-title': 'हमारी खास यादें',
+                'memories-p1': 'तुम्हारे साथ हर पल एक अनमोल याद बन जाता है। यहाँ हमारी कुछ सबसे खास यादें हैं:',
+                'memories-m1-date': '14 जनवरी, 2024',
+                'memories-m1-title': 'तुम्हारा जन्मदिन का जश्न',
+                'memories-m1-text': 'तुम्हारे चेहरे पर उस सरप्राइज पार्टी को देखकर जो मैंने आयोजित की थी, जो चमक थी, वो अनमोल थी। तुम दुनिया की सारी खुशियों की हकदार हो।',
+                'memories-m2-date': '8 मार्च, 2024',
+                'memories-m2-title': 'समुद्र तट पर छुट्टी',
+                'memories-m2-text': 'तुम्हारे साथ समुद्र किनारे सूर्यास्त देखना, तुम्हारा हाथ मेरे हाथ में - वह एकदम पूर्णता थी। मैंने कभी इतना सुकून महसूस नहीं किया।',
+                'memories-m3-date': '20 जुलाई, 2024',
+                'memories-m3-title': 'हमारी पहली सालगिरह का जश्न',
+                'memories-m3-text': 'एक साल साथ में! मुझे यकीन नहीं हो रहा कि जब मैं तुम्हारे साथ होता हूँ तो समय कितनी तेजी से उड़ जाता है। प्यार और हँसी के कई और सालों के लिए शुभकामनाएं।',
+                'ai-memory-title': '✨ नई याद बनाएं ✨',
+                'ai-memory-subtitle': 'कुछ शब्दों में एक पल का वर्णन करें, और एआई एक सुंदर याद का विवरण लिखने में आपकी मदद करेगा।',
+                'ai-memory-placeholder': 'उदाहरण के लिए, \'समुद्र तट पर हमारा पहला चुंबन\' या \'उस बरसात के दिन की फिल्म मैराथन\'',
+                'ai-memory-btn': 'याद बनाएं',
+                'ai-memory-loading': 'बन रहा है...',
+                'gallery-title': 'हमारे खास पल',
+                'gallery-photo1': 'गोवा की यात्रा',
+                'gallery-photo2': 'हमारी पहली सालगिरह',
+                'gallery-photo3': 'बरसात के दिन कॉफी डेट',
+                'gallery-photo4': 'मूवी नाइट',
+                'guestbook-title': 'गेस्टबुक',
+                'guestbook-intro': 'यहाँ आप दोनों एक-दूसरे के लिए दिल से मैसेज छोड़ सकते हैं।',
+                'guestbook-placeholder': 'अपना मैसेज लिखें...',
+                'guestbook-btn': 'मैसेज भेजें',
+                'guestbook-loading': 'मैसेज लोड हो रहे हैं...',
+                'guestbook-no-messages': 'अभी तक कोई मैसेज नहीं है।',
+                'ai-tts-title': '💌 एक वॉइस मैसेज छोड़ें 💌',
+                'ai-tts-subtitle': 'एक छोटा, प्यारा सा मैसेज टाइप करें और इसे एक रोमांटिक आवाज में सुनें।',
+                'ai-tts-placeholder': 'उदाहरण के लिए, \'मैं तुमसे शब्दों से परे प्यार करता हूँ।\'',
+                'ai-tts-btn': 'वॉयस मैसेज बनाएं और चलाएं',
+                'ai-tts-loading': 'ऑडियो बन रहा है...',
+                'audio-unsupported': 'आपका ब्राउज़र ऑडियो को सपोर्ट नहीं करता।',
+                'footer-text1': 'रोहन ने श्रद्धा के लिए ❤ से बनाया है | अनंत प्रेम',
+                'footer-text2': '© 2024 - हमारी निजी प्रेम कहानी'
+            },
+            'mr': {
+                'loading-text': 'आमच्या प्रेमाचे लोडिंग...',
+                'password-title': 'रोहन आणि श्रद्धा',
+                'password-subtitle': 'आमची प्रेमकथा पाहण्यासाठी विशेष पासवर्ड टाका',
+                'password-placeholder': 'पासवर्ड टाका',
+                'password-btn': 'प्रवेश करा',
+                'password-error': 'चुकीचा पासवर्ड. कृपया पुन्हा प्रयत्न करा.',
+                'main-title': 'रोहन आणि श्रद्धा',
+                'main-subtitle': 'प्रेम आणि एकत्रतेचा एक सुंदर प्रवास',
+                'countdown-title': 'आमच्या दुसऱ्या वर्धापनदिनासाठी काउंटडाउन',
+                'countdown-days': 'दिवस',
+                'countdown-hours': 'तास',
+                'countdown-minutes': 'मिनिटे',
+                'countdown-seconds': 'सेकंद',
+                'countdown-text': 'जोपर्यंत आम्ही 19 फेब्रुवारी, 2025 रोजी 2 वर्षांच्या प्रेमाचा उत्सव साजरा करू',
+                'nav-home': 'मुख्यपृष्ठ',
+                'nav-story': 'आमची कथा',
+                'nav-memories': 'आठवणी',
+                'nav-gallery': 'गॅलरी',
+                'nav-guestbook': 'गेस्टबुक',
+                'nav-future': 'आमचे भविष्य',
+                'home-title': 'आमच्या प्रेमकथेत आपले स्वागत आहे',
+                'home-p1': 'जगात अनेक क्षण असतात, पण आमचे क्षण सर्वात खास बनले. ही वेबसाइट रोहन आणि श्रद्धा यांच्यातील सुंदर प्रेमाला समर्पित आहे - एक प्रेम जे प्रत्येक दिवसागणिक अधिक मजबूत होत जाते.',
+                'home-m1-date': '19 फेब्रुवारी, 2023',
+                'home-m1-title': 'ज्या दिवशी आम्ही भेटलो',
+                'home-m1-text': 'मला अजूनही आठवते की मी तुला पहिल्यांदा पाहिले होते. तुझ्या हसण्याने खोली उजळली होती, आणि त्याच क्षणी मला कळले की तू कोणीतरी खास आहेस.',
+                'home-m2-date': '5 एप्रिल, 2023',
+                'home-m2-title': 'आमची पहिली डेट',
+                'home-m2-text': 'आम्ही कॉफीवर तासन्तास बोलत राहिलो, आणि मला जाणवले की मला तुझ्याशी कधीच बोलणे थांबवायचे नाही. तेव्हा मला कळले की हे केवळ आकर्षणापेक्षा जास्त आहे.',
+                'story-title': 'आमची प्रेमकथा',
+                'story-p1': 'आमची कथा एका गरम फेब्रुवारीच्या दिवशी सुरू झाली. लाजऱ्या नजरांपासून ते मन जिंकणाऱ्या संवादांपर्यंत, आमचे नाते प्रत्येक क्षणासोबत अधिक मजबूत होत गेले.',
+                'story-m1-date': '15 जून, 2023',
+                'story-m1-title': 'आमचा पहिला प्रवास',
+                'story-m1-text': 'पर्वतांवर आमची वीकेंड सुट्टी खूप जादुई होती. त्या सुंदर दृश्यासह तुझ्या हसण्याला पाहून जागे होणे ही एक अशी आठवण आहे जी मी नेहमी जपून ठेवेन.',
+                'story-m2-date': '10 सप्टेंबर, 2023',
+                'story-m2-title': 'कुटुंबांना भेटणे',
+                'story-m2-text': 'तुझी ओळख माझ्या आई-वडिलांना करून देताना मी खूप घाबरलो होतो, पण तू लगेच त्यांना मोहित केलेस. आता ते तुझ्यावर जवळपास माझ्यासारखेच प्रेम करतात!',
+                'story-m3-date': '25 डिसेंबर, 2023',
+                'story-m3-title': 'पहिला ख्रिसमस सोबत',
+                'story-m3-text': 'तुझ्या आणि तुझ्या कुटुंबासोबत ख्रिसमस घालवणे हे माझ्या स्वप्नातले होते. तू त्या लाल ड्रेसमध्ये जशी दिसत होतीस, ते पाहून माझा श्वास थांबला.',
+                'memories-title': 'आमच्या खास आठवणी',
+                'memories-p1': 'तुझ्यासोबतचा प्रत्येक क्षण एक अनमोल आठवण बनतो. येथे आमच्या काही सर्वात खास आठवणी आहेत:',
+                'memories-m1-date': '14 जानेवारी, 2024',
+                'memories-m1-title': 'तुझा वाढदिवस सोहळा',
+                'memories-m1-text': 'मी आयोजित केलेल्या सरप्राइज पार्टीला पाहून तुझ्या चेहऱ्यावर जी चमक होती, ती अनमोल होती. तू जगातील सर्व आनंदास पात्र आहेस.',
+                'memories-m2-date': '8 मार्च, 2024',
+                'memories-m2-title': 'समुद्रकिनाऱ्यावरील सुट्टी',
+                'memories-m2-text': 'समुद्रकिनाऱ्यावर तुझ्यासोबत सूर्यास्त पाहणे, तुझा हात माझ्या हातात - तो क्षण पूर्णपणे परिपूर्ण होता. मला कधीच इतके शांत वाटले नाही.',
+                'memories-m3-date': '20 जुलै, 2024',
+                'memories-m3-title': 'आमच्या पहिल्या वर्धापनदिनाचा सोहळा',
+                'memories-m3-text': 'एक वर्ष सोबत! मला विश्वास बसत नाही की मी तुझ्यासोबत असतो तेव्हा वेळ किती वेगाने उडतो. प्रेम आणि हास्याच्या आणखी अनेक वर्षांसाठी शुभेच्छा.',
+                'ai-memory-title': '✨ एक नवीन आठवण तयार करा ✨',
+                'ai-memory-subtitle': 'काही शब्दांत एका क्षणाचे वर्णन करा, आणि AI तुम्हाला एक सुंदर आठवण लिहिण्यास मदत करेल.',
+                'ai-memory-placeholder': 'उदाहरणार्थ, \'समुद्रकिनाऱ्यावरचे आमचे पहिले चुंबन\' किंवा \'त्या पावसाऱ्या दिवसातील चित्रपट मॅरेथॉन\'',
+                'ai-memory-btn': 'आठवण तयार करा',
+                'ai-memory-loading': 'तयार होत आहे...',
+                'gallery-title': 'आमचे खास क्षण',
+                'gallery-photo1': 'गोवा यात्रा',
+                'gallery-photo2': 'आमचा पहिला वर्धापनदिन',
+                'gallery-photo3': 'पावसाळ्याच्या दिवसातील कॉफी डेट',
+                'gallery-photo4': 'मूवी नाईट',
+                'guestbook-title': 'गेस्टबुक',
+                'guestbook-intro': 'येथे तुम्ही दोघेही एकमेकांसाठी मनापासून संदेश सोडू शकता.',
+                'guestbook-placeholder': 'तुमचा संदेश लिहा...',
+                'guestbook-btn': 'संदेश पाठवा',
+                'guestbook-loading': 'संदेश लोड होत आहेत...',
+                'guestbook-no-messages': 'अद्याप कोणताही संदेश नाही.',
+                'ai-tts-title': '💌 एक व्हॉइस मेसेज सोडा 💌',
+                'ai-tts-subtitle': 'एक छोटा, गोड मेसेज टाइप करा आणि तो एका रोमँटिक आवाजात ऐका.',
+                'ai-tts-placeholder': 'उदाहरणार्थ, \'माझे तुझ्यावर शब्दांच्या पलीकडे प्रेम आहे.\'',
+                'ai-tts-btn': 'व्हॉइस मेसेज तयार करा आणि ऐका',
+                'ai-tts-loading': 'ऑडिओ तयार होत आहे...',
+                'audio-unsupported': 'तुमचा ब्राउझर ऑडिओला सपोर्ट करत नाही.',
+                'footer-text1': 'रोहनने श्रद्धासाठी ❤ ने बनवले आहे | अनंत प्रेम',
+                'footer-text2': '© 2024 - आमची खाजगी प्रेमकथा'
+            }
+        };
+
+        // Global variable for current language
+        let currentLang = 'hi';
+
+        // Firebase initialization
+        let db, auth, userId;
+        
+        // Initialize Firebase
+        function initFirebase() {
+            try {
+                const firebaseConfig = JSON.parse(_firebase_config);
+                firebase.initializeApp(firebaseConfig);
+                auth = firebase.auth();
+                db = firebase.firestore();
+                
+                // Sign in with custom token or anonymously if not available
+                if (__initial_auth_token) {
+                    auth.signInWithCustomToken(__initial_auth_token)
+                        .then(() => console.log("Signed in with custom token"))
+                        .catch(error => {
+                            console.error("Error signing in with custom token:", error);
+                            signInAnonymously();
+                        });
+                } else {
+                    signInAnonymously();
+                }
+                
+                // Listen for auth state changes
+                auth.onAuthStateChanged(user => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("User signed in:", userId);
+                        setupGuestbookListener();
+                    } else {
+                        console.log("User signed out");
+                        userId = null;
+                    }
+                });
+            } catch (error) {
+                console.error("Error initializing Firebase:", error);
+            }
+        }
+        
+        function signInAnonymously() {
+            auth.signInAnonymously()
+                .then(() => console.log("Signed in anonymously"))
+                .catch(error => console.error("Error signing in anonymously:", error));
+        }
+        
+        // Render guestbook entries
+        function renderGuestbookEntries(entries) {
+            const guestbookEntriesContainer = document.getElementById('guestbook-entries');
+            guestbookEntriesContainer.innerHTML = '';
+            
+            if (entries.length === 0) {
+                guestbookEntriesContainer.innerHTML = '<p data-lang-key="guestbook-no-messages" style="text-align: center; font-style: italic;">अभी तक कोई मैसेज नहीं है।</p>';
+                // Re-apply language translation
+                const noMessagesElement = guestbookEntriesContainer.querySelector('[data-lang-key]');
+                if (noMessagesElement) {
+                    const key = noMessagesElement.getAttribute('data-lang-key');
+                    noMessagesElement.innerText = translations[currentLang][key];
+                }
+                return;
+            }
+            
+            entries.forEach(entry => {
+                const date = entry.timestamp ? new Date(entry.timestamp.seconds * 1000).toLocaleString() : 'N/A';
+                const entryDiv = document.createElement('div');
+                entryDiv.classList.add('guestbook-entry');
+                entryDiv.innerHTML = `
+                    <div class="guestbook-meta">
+                        <span class="guestbook-user">User ID: ${entry.userId}</span>
+                        <span class="guestbook-date">${date}</span>
+                    </div>
+                    <p class="guestbook-message">${entry.message}</p>
+                `;
+                guestbookEntriesContainer.appendChild(entryDiv);
+            });
+        }
+        
+        // Setup guestbook listener
+        function setupGuestbookListener() {
+            if (!db) {
+                console.error("Firestore is not initialized.");
+                return;
+            }
+            
+            const guestbookCollectionRef = db.collection(`artifacts/${__app_id}/public/data/guestbook`);
+            
+            guestbookCollectionRef.orderBy('timestamp', 'desc').onSnapshot(snapshot => {
+                const entries = [];
+                snapshot.forEach(doc => {
+                    entries.push(doc.data());
+                });
+                renderGuestbookEntries(entries);
+            }, error => {
+                console.error("Error listening to guestbook:", error);
+                const guestbookEntriesContainer = document.getElementById('guestbook-entries');
+                guestbookEntriesContainer.innerHTML = '<p style="color:#ff3366;">Error loading messages. Please try again later.</p>';
+            });
+        }
+        
+        // Show notification
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            if (isError) {
+                notification.classList.add('error');
+            }
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                notification.classList.remove('error');
+            }, 3000);
+        }
+        
+        // Translate the page
+        function translatePage(lang) {
+            const elements = document.querySelectorAll('[data-lang-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if (translations[lang] && translations[lang][key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = translations[lang][key];
+                    } else {
+                        el.innerText = translations[lang][key];
+                    }
+                }
+            });
+        }
+        
+        // Start floating hearts animation
+        function startFloatingHearts() {
+            const floatingHearts = document.getElementById('floating-hearts');
+            
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤';
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                floatingHearts.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 8000);
+            }
+            
+            setInterval(createHeart, 300);
+        }
+        
+        // Update anniversary countdown
+        function updateAnniversaryCountdown() {
+            const anniversaryDate = new Date('February 19, 2025 00:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = anniversaryDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+            document.getElementById('seconds').innerText = seconds;
+        }
+        
+        // DOM Content Loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial translation
+            translatePage(currentLang);
+            
+            // Language switching
+            const langButtons = document.querySelectorAll('.lang-btn');
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    currentLang = this.getAttribute('data-lang');
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    translatePage(currentLang);
+                });
+            });
+            
+            // Loading screen
+            const loadingScreen = document.getElementById('loading-screen');
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    loadingScreen.style.opacity = '0';
+                    loadingScreen.style.visibility = 'hidden';
+                }, 2000);
+            });
+            
+            // Password protection
+            const passwordContainer = document.getElementById('password-container');
+            const mainContent = document.getElementById('main-content');
+            const passwordInput = document.getElementById('password-input');
+            const submitButton = document.getElementById('submit-password');
+            const errorMessage = document.getElementById('error-message');
+            const correctPassword = "Rohanshraddha365";
+            
+            submitButton.addEventListener('click', function() {
+                if (passwordInput.value === correctPassword) {
+                    passwordContainer.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    startFloatingHearts();
+                    
+                    // Initialize Firebase after password is entered
+                    initFirebase();
+                    
+                    // Play background music
+                    const backgroundMusic = document.getElementById('background-music');
+                    backgroundMusic.play().catch(e => {
+                        console.log("Audio playback failed. User interaction might be required.");
+                    });
+                } else {
+                    errorMessage.style.display = 'block';
+                    passwordInput.value = '';
+                    setTimeout(() => {
+                        errorMessage.style.display = 'none';
+                    }, 3000);
+                }
+            });
+            
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    submitButton.click();
+                }
+            });
+            
+            // Countdown timer
+            setInterval(updateAnniversaryCountdown, 1000);
+            updateAnniversaryCountdown();
+            
+            // Navigation
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const sections = document.querySelectorAll('.section');
+            
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    
+                    // Update active button
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show active section
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === target) {
+                            section.classList.add('active');
+                        }
+                    });
+                });
+            });
+            
+            // Guestbook form submission
+            const guestbookForm = document.getElementById('guestbook-form');
+            guestbookForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!db) {
+                    showNotification("Database is not initialized. Please try again.", true);
+                    return;
+                }
+                
+                const messageInput = document.getElementById('guestbook-message');
+                const message = messageInput.value.trim();
+                
+                if (message === '') {
+                    showNotification("Please enter a message.", true);
+                    return;
+                }
+                
+                const guestbookCollectionRef = db.collection(`artifacts/${__app_id}/public/data/guestbook`);
+                
+                guestbookCollectionRef.add({
+                    userId: userId || 'anonymous',
+                    message: message,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                })
+                .then(() => {
+                    messageInput.value = '';
+                    showNotification("Message sent successfully!");
+                })
+                .catch(error => {
+                    console.error("Error adding message:", error);
+                    showNotification("Error sending message. Please try again.", true);
+                });
+            });
+            
+            // Gemini API integration for memory generation
+            const generateMemoryBtn = document.getElementById('generate-memory-btn');
+            const aiPromptInput = document.getElementById('ai-prompt');
+            const loadingIndicator = document.getElementById('loading-indicator');
+            const memoriesContainer = document.getElementById('memories-container');
+            
+            generateMemoryBtn.addEventListener('click', function() {
+                const prompt = aiPromptInput.value.trim();
+                
+                if (prompt === '') {
+                    showNotification("Please describe a memory first.", true);
+                    return;
+                }
+                
+                loadingIndicator.style.display = 'block';
+                generateMemoryBtn.disabled = true;
+                
+                // In a real implementation, you would call the Gemini API here
+                // For now, we'll simulate a response after a delay
+                setTimeout(() => {
+                    loadingIndicator.style.display = 'none';
+                    generateMemoryBtn.disabled = false;
+                    
+                    // Simulated AI response
+                    const simulatedResponse = `
+                        <div class="memory-box">
+                            <div class="memory-date">${new Date().toLocaleDateString()}</div>
+                            <h3>AI Generated Memory</h3>
+                            <p>This is a simulated AI-generated memory based on your prompt: "${prompt}". In a real implementation, this would be generated by the Gemini API.</p>
+                        </div>
+                    `;
+                    
+                    memoriesContainer.insertAdjacentHTML('afterbegin', simulatedResponse);
+                    showNotification("Memory generated successfully!");
+                    
+                }, 2000);
+            });
+            
+            // Text-to-speech functionality
+            const generateTtsBtn = document.getElementById('generate-tts-btn');
+            const ttsPromptInput = document.getElementById('tts-prompt');
+            const ttsLoadingIndicator = document.getElementById('tts-loading-indicator');
+            const audioPlayerContainer = document.getElementById('audio-player-container');
+            
+            generateTtsBtn.addEventListener('click', function() {
+                const prompt = ttsPromptInput.value.trim();
+                
+                if (prompt === '') {
+                    showNotification("Please enter a message for the voice note.", true);
+                    return;
+                }
+                
+                ttsLoadingIndicator.style.display = 'block';
+                generateTtsBtn.disabled = true;
+                
+                // In a real implementation, you would call a TTS API here
+                // For now, we'll simulate the process
+                setTimeout(() => {
+                    ttsLoadingIndicator.style.display = 'none';
+                    generateTtsBtn.disabled = false;
+                    
+                    // Clear previous audio player
+                    audioPlayerContainer.innerHTML = '';
+                    
+                    // Create a simulated audio player
+                    const audioElement = document.createElement('audio');
+                    audioElement.controls = true;
+                    audioElement.innerHTML = '<p>Your browser does not support the audio element.</p>';
+                    
+                    // In a real implementation, you would set the src to the generated audio URL
+                    // audioElement.src = "url-to-generated-audio";
+                    
+                    audioPlayerContainer.appendChild(audioElement);
+                    showNotification("Voice message generated! (Simulated)");
+                    
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>   
